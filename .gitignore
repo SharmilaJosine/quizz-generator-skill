@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Generated quiz outputs (ignore output files, keep templates)
+*_quiz.html
+sample_web_quiz_*.html
+
+# Generated test assets (created during local verification)
+sample_space.docx
+sample_planets.xlsx
+sample_web.pdf
+create_test_assets.py
+create_mock_quiz.py
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
