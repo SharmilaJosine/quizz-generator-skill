@@ -3,40 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fun Interactive Quiz! 🚀</title>
-  <!-- Google Fonts: Bubbly Fredoka for headings, Inter for body -->
+  <title>Quiz Adventure! 🚀</title>
+  <!-- Google Fonts: Fredoka for bubbly headers/buttons, Inter for clean body -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    /* CSS Custom Properties for Playful Theme */
+    /* CSS Custom Properties for Playful Theme matching the Mockup */
     :root {
-      --bg-primary: #e0f2fe; /* Light sky blue */
-      --bg-secondary: #f0fdf4; /* Light mint */
-      --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #e8eaf6 100%);
+      --bg-primary: #a5dcf8; /* Soft blue sky */
+      --bg-gradient: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 100%);
       --card-bg: #ffffff;
-      --card-border: #f1f5f9;
+      --card-border: #bae6fd;
       --text-primary: #1e293b;
-      --text-secondary: #475569;
+      --text-secondary: #334155;
       --text-muted: #64748b;
       
-      --color-primary: #4f46e5;       /* Fun Indigo */
-      --color-primary-hover: #4338ca;
-      --color-secondary: #f59e0b;     /* Sunny Amber */
+      --color-primary: #3b82f6;       /* Bubbly Blue */
+      --color-primary-hover: #1d4ed8;
+      --color-secondary: #f59e0b;     /* Orange/Amber */
       --color-accent: #ec4899;        /* Bubblegum Pink */
       
       --color-success: #10b981;       /* Friendly Green */
       --color-success-bg: #ecfdf5;
-      --color-success-border: #a7f3d0;
+      --color-success-border: #10b981;
       
       --color-error: #f43f5e;         /* Bright Coral Red */
       --color-error-bg: #fff1f2;
       --color-error-border: #fecdd3;
       
-      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
-      --card-shadow: 0 12px 24px -4px rgba(148, 163, 184, 0.35), 0 4px 12px -2px rgba(148, 163, 184, 0.15);
-      --button-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+      --btn-orange-gradient: linear-gradient(180deg, #ff9800 0%, #ff5722 100%);
+      --btn-blue-gradient: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+      --rainbow-gradient: linear-gradient(90deg, #ef4444 0%, #a855f7 25%, #3b82f6 50%, #10b981 75%, #f59e0b 100%);
+      
+      --outer-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.15);
+      --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
     }
 
     /* Core Styles */
@@ -55,65 +57,183 @@
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      position: relative;
     }
 
-    h1, h2, h3, h4, .brand {
+    h1, h2, h3, h4, .brand, .pill-btn, .btn {
       font-family: 'Fredoka', sans-serif;
       font-weight: 600;
     }
 
-    /* Navigation Bar */
-    header {
+    /* Floating space decorations in the margins */
+    .decorations {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      padding: 1rem 2rem;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .dec {
+      position: absolute;
+      font-size: 3rem;
+      filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.15));
+      user-select: none;
+    }
+
+    .astronaut {
+      right: 2%;
+      bottom: 5%;
+      font-size: 6rem;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .rocket1 {
+      left: 3%;
+      top: 25%;
+      transform: rotate(-45deg);
+      animation: fly1 7s ease-in-out infinite;
+    }
+
+    .rocket2 {
+      left: 4%;
+      bottom: 20%;
+      transform: rotate(-15deg);
+      animation: fly2 8s ease-in-out infinite;
+    }
+
+    .saturn {
+      right: 3%;
+      top: 30%;
+      font-size: 4rem;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .earth {
+      right: 4%;
+      top: 50%;
+      font-size: 3.5rem;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .moon {
+      right: 5%;
+      top: 65%;
+      font-size: 2.5rem;
+      animation: float 4.5s ease-in-out infinite;
+    }
+
+    .star {
+      font-size: 1.75rem;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    .star1 { left: 4%; top: 12%; animation-delay: 0.2s; }
+    .star2 { left: 10%; top: 50%; animation-delay: 0.8s; }
+    .star3 { right: 8%; top: 15%; animation-delay: 0.4s; }
+    .star4 { left: 8%; bottom: 8%; animation-delay: 1.2s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    @keyframes fly1 {
+      0%, 100% { transform: translateY(0) rotate(-45deg); }
+      50% { transform: translateY(-10px) rotate(-42deg); }
+    }
+    @keyframes fly2 {
+      0%, 100% { transform: translateY(0) rotate(-15deg); }
+      50% { transform: translateY(-12px) rotate(-10deg); }
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.4; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* Navigation Bar / Score board */
+    .top-navbar {
+      width: 100%;
+      max-width: 900px;
+      margin: 1.5rem auto 0 auto;
+      padding: 0 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
       z-index: 10;
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(8px);
-      border-bottom: 3px solid rgba(255, 255, 255, 0.8);
+      flex-wrap: wrap;
     }
 
-    .brand {
-      font-size: 1.75rem;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.01em;
+    .nav-left-pills {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
 
-    .kids-badge {
-      background: var(--color-secondary);
-      color: white;
-      font-size: 0.8rem;
+    .pill-btn {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 9999px;
+      padding: 0.5rem 1.25rem;
+      color: #334155;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .pill-btn:hover {
+      border-color: var(--color-primary);
+      transform: scale(1.03);
+    }
+
+    .score-badge {
+      background: #fef3c7;
+      border: 2px solid #fde68a;
+      border-radius: 9999px;
+      padding: 0.5rem 1.5rem;
+      font-size: 1rem;
       font-weight: 700;
-      padding: 0.25rem 0.6rem;
-      border-radius: 8px;
-      margin-left: 0.5rem;
-      vertical-align: middle;
-      text-transform: uppercase;
+      color: #b45309;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    /* Main Container */
+    /* Main Container Frame */
     main {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem 3rem 1rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* The Main Frame (Outer Blue Container Card) */
+    .adventure-frame {
+      width: 100%;
+      max-width: 820px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 5px solid #bae6fd;
+      border-radius: 36px;
+      padding: 2rem;
+      box-shadow: var(--outer-shadow);
+      display: flex;
+      flex-direction: column;
       position: relative;
     }
 
-    /* Bouncy screen animations */
+    /* Screen Card animations */
     .screen-card {
-      width: 100%;
-      max-width: 750px;
-      background: var(--card-bg);
-      border: 3px solid #f1f5f9;
-      border-radius: 28px;
-      padding: 2.5rem;
-      box-shadow: var(--card-shadow);
       display: none;
       flex-direction: column;
       animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -123,135 +243,144 @@
       display: flex;
     }
 
-    @keyframes bounceIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    /* Start Screen */
+    /* Welcome/Start Screen */
     .welcome-header {
       text-align: center;
       margin-bottom: 2rem;
     }
 
     .welcome-header h2 {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       margin-bottom: 0.75rem;
-      line-height: 1.2;
-    }
-
-    .gradient-text {
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .welcome-desc {
-      color: var(--text-secondary);
-      font-size: 1.15rem;
-      line-height: 1.6;
+      color: #1e3a8a;
     }
 
     .quiz-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 1.5rem;
-      margin: 2rem 0;
+      margin: 1.5rem 0 2rem 0;
     }
 
     .stat-box {
-      background: #f8fafc;
-      border: 2px solid #e2e8f0;
+      background: #f0f9ff;
+      border: 3px solid #bae6fd;
       padding: 1.25rem;
-      border-radius: 20px;
+      border-radius: 24px;
       text-align: center;
     }
 
     .stat-label {
       font-family: 'Fredoka', sans-serif;
-      font-size: 0.95rem;
-      color: var(--text-muted);
+      font-size: 1rem;
+      color: var(--text-secondary);
       margin-bottom: 0.25rem;
     }
 
     .stat-value {
       font-size: 1.75rem;
       font-weight: 700;
-      color: var(--color-primary);
+      color: #1e3a8a;
     }
 
-    /* Progress Indicators */
+    /* Rainbow Progress Bar Container */
+    .progress-bar-wrapper {
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
+    .progress-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .questions-count-label {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1rem;
+    }
+
     .progress-container {
       width: 100%;
       background: #e2e8f0;
-      height: 14px;
+      height: 20px;
       border-radius: 9999px;
-      overflow: hidden;
-      margin-bottom: 2rem;
+      position: relative;
+      padding: 3px;
+      display: flex;
+      align-items: center;
     }
 
     .progress-bar {
       height: 100%;
-      background: var(--accent-gradient);
+      background: var(--rainbow-gradient);
       width: 0%;
       border-radius: 9999px;
       transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      position: relative;
     }
 
-    .question-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .question-badge {
-      background: #e0e7ff;
-      color: var(--color-primary);
-      padding: 0.4rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.9rem;
+    /* Rainbow progress percentage badge */
+    .progress-pct-badge {
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ef4444;
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.75rem;
       font-weight: 700;
-      border: 2px solid #c7d2fe;
+      padding: 0.25rem 0.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      pointer-events: none;
     }
 
-    .timer-badge {
-      background: #fffbeb;
-      border: 2px solid #fef3c7;
-      color: #b45309;
-      padding: 0.4rem 1rem;
+    /* Active Question Card (White Inner Box) */
+    .question-inner-card {
+      background: white;
+      border-radius: 28px;
+      border: 3px solid #f1f5f9;
+      padding: 2.25rem;
+      position: relative;
+      box-shadow: var(--card-shadow);
+      margin-top: 1rem;
+    }
+
+    /* Q7/10 floating tag on top */
+    .question-idx-badge {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border: 3px solid #bae6fd;
       border-radius: 9999px;
-      font-size: 0.9rem;
+      padding: 0.35rem 1.25rem;
+      font-family: 'Fredoka', sans-serif;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .timer-icon {
-      color: var(--color-secondary);
-      animation: wobble 2s infinite ease-in-out;
-    }
-
-    @keyframes wobble {
-      0%, 100% { transform: rotate(0); }
-      15% { transform: rotate(-8deg); }
-      30% { transform: rotate(6deg); }
-      45% { transform: rotate(-4deg); }
-      60% { transform: rotate(2deg); }
+      color: #1e3a8a;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      font-size: 1rem;
     }
 
     .question-title {
-      font-size: 1.6rem;
-      margin-bottom: 2rem;
+      font-size: 1.5rem;
+      margin: 0.5rem 0 1.5rem 0;
       line-height: 1.4;
-      color: var(--text-primary);
+      color: #1e3a8a;
+      text-align: center;
     }
 
     /* Speaker Buttons for TTS */
@@ -263,7 +392,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.35rem;
+      padding: 0.3rem;
       border-radius: 50%;
       transition: background-color 0.2s, color 0.2s, transform 0.2s;
       vertical-align: middle;
@@ -271,46 +400,54 @@
     }
 
     .speaker-btn:hover {
-      background-color: rgba(79, 70, 229, 0.1);
+      background-color: rgba(59, 130, 246, 0.1);
       color: var(--color-accent);
       transform: scale(1.15);
     }
 
     .speaker-btn svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
     }
 
-    /* Answers Layout - Bouncy Bubbly Cards */
+    /* Answers Layout - 2x2 grid matching mockup */
     .answers-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
       margin-bottom: 2rem;
     }
 
+    @media (max-width: 600px) {
+      .answers-container {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+    }
+
     .answer-card {
-      background: #f8fafc;
-      border: 3px solid #e2e8f0;
-      padding: 1.25rem 1.5rem;
+      background: #eef2ff;
+      border: 3px solid #c7d2fe;
+      padding: 1.2rem 1.5rem;
       border-radius: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text-secondary);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #312e81;
       transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       outline: none;
       text-align: left;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     }
 
     .answer-card:hover:not(.locked) {
-      background: #fff;
+      background: #ffffff;
       border-color: var(--color-primary);
-      transform: scale(1.02);
-      box-shadow: 0 8px 16px rgba(148,163,184,0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(199,210,254,0.3);
     }
 
     .answer-card.selected {
@@ -321,14 +458,15 @@
 
     .answer-card.correct {
       background: var(--color-success-bg);
-      border-color: var(--color-success);
-      color: var(--color-success);
+      border-color: var(--color-success-border);
+      color: #047857;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
     }
 
     .answer-card.incorrect {
       background: var(--color-error-bg);
-      border-color: var(--color-error);
-      color: var(--color-error);
+      border-color: #fca5a5;
+      color: #be123c;
     }
 
     .answer-indicator {
@@ -373,7 +511,7 @@
       justify-content: center;
       flex-direction: column;
       gap: 0.5rem;
-      padding: 2rem;
+      padding: 1.75rem;
       font-size: 1.3rem;
     }
 
@@ -505,15 +643,15 @@
     /* Control Buttons */
     .button-group {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       gap: 1rem;
       margin-top: 1.5rem;
     }
 
     .btn {
-      padding: 1rem 2rem;
-      border-radius: 16px;
-      font-size: 1.05rem;
+      padding: 1rem 2.25rem;
+      border-radius: 9999px;
+      font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
@@ -523,40 +661,57 @@
       border: none;
       outline: none;
       transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
     }
 
-    .btn-primary {
-      background: var(--accent-gradient);
+    /* Orange Bubbly Submit Button inside White Card */
+    .btn-submit {
+      background: var(--btn-orange-gradient);
       color: white;
-      box-shadow: var(--button-shadow);
+      border-bottom: 4px solid #d84315;
     }
 
-    .btn-primary:hover:not(:disabled) {
+    .btn-submit:hover:not(:disabled) {
       transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.45);
+      box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4);
     }
 
-    .btn-primary:disabled {
-      opacity: 0.5;
+    .btn-submit:disabled {
+      opacity: 0.6;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
     }
 
+    /* Blue Next Button placed below card */
+    .btn-next {
+      background: var(--btn-blue-gradient);
+      color: white;
+      border-bottom: 4px solid #1a237e;
+      margin: 1.5rem auto 0 auto;
+      min-width: 250px;
+    }
+
+    .btn-next:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.45);
+    }
+
     .btn-secondary {
       background: #e2e8f0;
       color: var(--text-secondary);
+      border-bottom: 4px solid #cbd5e1;
     }
 
-    .btn-secondary:hover:not(:disabled) {
+    .btn-secondary:hover {
       background: #cbd5e1;
       color: var(--text-primary);
     }
 
-    /* Friendly Feedback Panel */
+    /* Friendly Feedback Panel inside White Card */
     .feedback-box {
       border-radius: 20px;
-      padding: 1.75rem;
+      padding: 1.5rem;
       margin-top: 1.5rem;
       border: 3px solid transparent;
       display: none;
@@ -571,18 +726,18 @@
     .feedback-box.correct {
       display: block;
       background: var(--color-success-bg);
-      border-color: var(--color-success-border);
+      border-color: #a7f3d0;
     }
 
     .feedback-box.incorrect {
       display: block;
       background: var(--color-error-bg);
-      border-color: var(--color-error-border);
+      border-color: #fecdd3;
     }
 
     .feedback-title {
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
@@ -590,16 +745,16 @@
     }
 
     .feedback-box.correct .feedback-title {
-      color: var(--color-success);
+      color: #047857;
     }
 
     .feedback-box.incorrect .feedback-title {
-      color: var(--color-error);
+      color: #be123c;
     }
 
     .feedback-desc {
-      font-size: 1rem;
-      line-height: 1.6;
+      font-size: 0.95rem;
+      line-height: 1.5;
       color: var(--text-secondary);
     }
 
@@ -652,7 +807,7 @@
       font-size: 3.25rem;
       font-family: 'Fredoka', sans-serif;
       line-height: 1;
-      color: var(--color-primary);
+      color: #1e3a8a;
     }
 
     .score-label {
@@ -727,12 +882,12 @@
 
     .status-badge.correct {
       background: #d1fae5;
-      color: var(--color-success);
+      color: #047857;
     }
 
     .status-badge.incorrect {
       background: #ffe4e6;
-      color: var(--color-error);
+      color: #be123c;
     }
 
     .review-explanation {
@@ -758,116 +913,158 @@
 </head>
 <body>
 
+  <!-- Floating Space Decorations -->
+  <div class="decorations">
+    <div class="dec astronaut">👨‍🚀</div>
+    <div class="dec rocket1">🚀</div>
+    <div class="dec rocket2">🚀</div>
+    <div class="dec saturn">🪐</div>
+    <div class="dec earth">🌍</div>
+    <div class="dec moon">🌕</div>
+    <div class="dec star star1">⭐</div>
+    <div class="dec star star2">⭐</div>
+    <div class="dec star star3">⭐</div>
+    <div class="dec star star4">⭐</div>
+  </div>
+
   <canvas id="confetti-canvas"></canvas>
 
-  <header>
-    <div class="brand">FunQuiz! 🚀 <span class="kids-badge">Ages 10-14</span></div>
-  </header>
+  <!-- Top Pill Stats Bar -->
+  <div class="top-navbar">
+    <div class="nav-left-pills">
+      <div class="pill-btn">🏆 Leaderboard</div>
+      <div class="pill-btn">👦 Profile</div>
+      <div class="pill-btn">🏅 Achievements</div>
+    </div>
+    <div id="score-display-pill" class="score-badge">SCORE: 0 pts</div>
+  </div>
 
   <main>
-    <!-- Welcome/Start Screen -->
-    <div id="start-screen" class="screen-card active">
-      <div class="welcome-header">
-        <h2 style="display:inline-flex; align-items:center; justify-content:center; gap:0.5rem;">
-          <span id="quiz-title" class="gradient-text">Loading Fun Challenge...</span>
-          <button id="title-speaker" onclick="window.quizApp.playTitleAudio()" class="speaker-btn" style="display: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-          </button>
-        </h2>
-        <p style="display:inline-flex; align-items:center; justify-content:center; gap:0.5rem; margin-top:0.75rem;">
-          <span id="quiz-desc" class="welcome-desc">Get ready to show off your brain power! 🧠💡</span>
-          <button id="desc-speaker" onclick="window.quizApp.playDescriptionAudio()" class="speaker-btn" style="display: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-          </button>
-        </p>
-      </div>
-
-      <div class="quiz-stats">
-        <div class="stat-box">
-          <div class="stat-label">Total Questions 📝</div>
-          <div id="stat-total-questions" class="stat-value">-</div>
+    <!-- Outer Adventure Frame Container -->
+    <div class="adventure-frame">
+      
+      <!-- Welcome/Start Screen -->
+      <div id="start-screen" class="screen-card active">
+        <div class="welcome-header">
+          <h2 style="display:inline-flex; align-items:center; justify-content:center; gap:0.5rem;">
+            <span id="quiz-title" class="gradient-text">Loading Fun Challenge...</span>
+            <button id="title-speaker" onclick="window.quizApp.playTitleAudio()" class="speaker-btn" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </button>
+          </h2>
+          <p style="display:inline-flex; align-items:center; justify-content:center; gap:0.5rem; margin-top:0.75rem;">
+            <span id="quiz-desc" class="welcome-desc">Get ready to show off your brain power! 🧠💡</span>
+            <button id="desc-speaker" onclick="window.quizApp.playDescriptionAudio()" class="speaker-btn" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </button>
+          </p>
         </div>
-        <div class="stat-box">
-          <div class="stat-label">Target Score 🎯</div>
-          <div class="stat-value">70%</div>
-        </div>
-      </div>
 
-      <button id="start-btn" class="btn btn-primary" style="margin: 0 auto; min-width: 220px; font-size:1.15rem;">Let's Play! 🎮</button>
-    </div>
-
-    <!-- Active Question Screen -->
-    <div id="quiz-screen" class="screen-card">
-      <div class="progress-container">
-        <div id="progress" class="progress-bar"></div>
-      </div>
-
-      <div class="question-meta">
-        <span id="question-count" class="question-badge">Question 1/1</span>
-        <span class="timer-badge">
-          <svg class="timer-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-          <span id="timer-display">00:00</span>
-        </span>
-      </div>
-
-      <h3 id="question-text" class="question-title" style="display:inline-flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">Let's check this out!</h3>
-
-      <div id="options-wrapper">
-        <!-- populated dynamically -->
-      </div>
-
-      <!-- Bouncy Feedback Box -->
-      <div id="feedback-panel" class="feedback-box">
-        <div id="feedback-title" class="feedback-title">Awesome!</div>
-        <p id="feedback-text" class="feedback-desc">Great job details here</p>
-      </div>
-
-      <div class="button-group">
-        <button id="clear-btn" class="btn btn-secondary">Clear 🧹</button>
-        <button id="submit-btn" class="btn btn-primary" disabled>Submit Answer Check! Check! 🔍</button>
-        <button id="next-btn" class="btn btn-primary" style="display: none;">Next Question ➡️</button>
-      </div>
-    </div>
-
-    <!-- Results Screen -->
-    <div id="results-screen" class="screen-card">
-      <div class="results-wrapper">
-        <h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Woohoo! Completed! 🎉</h2>
-        
-        <div class="score-circle-container">
-          <svg class="score-circle-svg" viewBox="0 0 180 180">
-            <defs>
-              <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#3b82f6" />
-                <stop offset="50%" stop-color="#8b5cf6" />
-                <stop offset="100%" stop-color="#ec4899" />
-              </linearGradient>
-            </defs>
-            <circle class="score-circle-bg" cx="90" cy="90" r="80" />
-            <circle id="score-ring" class="score-circle-progress" cx="90" cy="90" r="80" />
-          </svg>
-          <div class="score-text">
-            <div id="score-percentage" class="score-value">0%</div>
-            <div class="score-label">Final Score</div>
+        <div class="quiz-stats">
+          <div class="stat-box">
+            <div class="stat-label">Total Questions 📝</div>
+            <div id="stat-total-questions" class="stat-value">-</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Target Score 🎯</div>
+            <div class="stat-value">70%</div>
           </div>
         </div>
 
-        <div id="result-comment" class="result-comment">Great effort!</div>
-        <div id="result-fraction" class="result-score-fraction">You answered 0 out of 0 questions correctly.</div>
+        <button id="start-btn" class="btn btn-submit" style="margin: 0 auto; min-width: 240px; font-size:1.25rem;">Let's Play! 🎮</button>
+      </div>
 
-        <button id="restart-btn" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Play Again! 🔄</button>
+      <!-- Active Quiz Screen -->
+      <div id="quiz-screen" class="screen-card">
+        <!-- Rainbow Progress Bar -->
+        <div class="progress-bar-wrapper">
+          <div class="progress-labels">
+            <span class="progress-title">Progress</span>
+            <span id="questions-count-label" class="questions-count-label">0/10 Questions</span>
+          </div>
+          <div class="progress-container">
+            <div id="progress" class="progress-bar">
+              <div id="progress-pct" class="progress-pct-badge">0%</div>
+            </div>
+          </div>
+        </div>
 
-        <!-- Detailed Review Section -->
-        <div class="review-section">
-          <h3>Let's Review! 📚</h3>
-          <div id="review-list" class="review-list">
-            <!-- Populated dynamically -->
+        <div class="question-meta" style="margin-bottom: 0.5rem;">
+          <span id="question-count-badge" class="question-badge">Question 1/1</span>
+          <span class="timer-badge">
+            <svg class="timer-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span id="timer-display">00:00</span>
+          </span>
+        </div>
+
+        <!-- White Inner Question Card -->
+        <div class="question-inner-card">
+          <div id="floating-question-idx" class="question-idx-badge">Q1/1</div>
+          
+          <h3 id="question-text" class="question-title">Let's check this out!</h3>
+
+          <div id="options-wrapper">
+            <!-- populated dynamically -->
+          </div>
+
+          <!-- Bouncy Feedback Box -->
+          <div id="feedback-panel" class="feedback-box">
+            <div id="feedback-title" class="feedback-title">Awesome!</div>
+            <p id="feedback-text" class="feedback-desc">Great job details here</p>
+          </div>
+
+          <!-- Submit Button inside Card -->
+          <div class="button-group">
+            <button id="clear-btn" class="btn btn-secondary">Clear 🧹</button>
+            <button id="submit-btn" class="btn btn-submit" disabled>Submit Answer Check! Check! 🔍</button>
+          </div>
+        </div>
+
+        <!-- Next Button below Card -->
+        <button id="next-btn" class="btn btn-next" style="display: none;">Next Question ➡️</button>
+      </div>
+
+      <!-- Results Screen -->
+      <div id="results-screen" class="screen-card">
+        <div class="results-wrapper">
+          <h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Woohoo! Completed! 🎉</h2>
+          
+          <div class="score-circle-container">
+            <svg class="score-circle-svg" viewBox="0 0 180 180">
+              <defs>
+                <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#3b82f6" />
+                  <stop offset="50%" stop-color="#8b5cf6" />
+                  <stop offset="100%" stop-color="#ec4899" />
+                </linearGradient>
+              </defs>
+              <circle class="score-circle-bg" cx="90" cy="90" r="80" />
+              <circle id="score-ring" class="score-circle-progress" cx="90" cy="90" r="80" />
+            </svg>
+            <div class="score-text">
+              <div id="score-percentage" class="score-value">0%</div>
+              <div class="score-label">Final Score</div>
+            </div>
+          </div>
+
+          <div id="result-comment" class="result-comment">Great effort!</div>
+          <div id="result-fraction" class="result-score-fraction">You answered 0 out of 0 questions correctly.</div>
+
+          <button id="restart-btn" class="btn btn-submit" style="font-size: 1.15rem; padding: 1rem 2.5rem; min-width:240px;">Play Again! 🔄</button>
+
+          <!-- Detailed Review Section -->
+          <div class="review-section">
+            <h3>Let's Review! 📚</h3>
+            <div id="review-list" class="review-list">
+              <!-- Populated dynamically -->
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   </main>
 
@@ -1057,7 +1254,8 @@
           this.quizData = this.getFallbackQuiz();
         }
         
-        document.getElementById('quiz-title').textContent = this.quizData.title || "Fun Knowledge Quiz! 🚀";
+        const titleText = this.quizData.title || "Fun Knowledge Quiz!";
+        document.getElementById('quiz-title').textContent = `QUIZ ADVENTURE: ${titleText.toUpperCase()} 🤩`;
         document.getElementById('quiz-desc').textContent = this.quizData.description || "Challenge yourself and earn badges!";
         document.getElementById('stat-total-questions').textContent = this.quizData.questions.length;
         
@@ -1069,11 +1267,18 @@
           document.getElementById('desc-speaker').style.display = 'inline-flex';
         }
         
+        this.updateScorePill();
+        
         this.startBtn.addEventListener('click', () => this.startQuiz());
         this.clearBtn.addEventListener('click', () => this.clearCurrentSelection());
         this.submitBtn.addEventListener('click', () => this.submitAnswer());
         this.nextBtn.addEventListener('click', () => this.nextQuestion());
         document.getElementById('restart-btn').addEventListener('click', () => this.restartQuiz());
+      }
+
+      updateScorePill() {
+        const pts = this.score * 100;
+        document.getElementById('score-display-pill').innerHTML = `🏅 SCORE: ${pts} pts`;
       }
 
       playAudio(base64Src) {
@@ -1145,6 +1350,7 @@
         this.score = 0;
         this.userAnswers = new Array(this.quizData.questions.length).fill(null);
         this.totalSeconds = 0;
+        this.updateScorePill();
         this.showScreen('quiz');
         this.startTimer();
         this.loadQuestion();
@@ -1169,11 +1375,19 @@
         if (this.currentAudio) this.currentAudio.pause();
         
         const question = this.quizData.questions[this.currentQuestionIdx];
+        const total = this.quizData.questions.length;
         
-        document.getElementById('question-count').textContent = `Question ${this.currentQuestionIdx + 1}/${this.quizData.questions.length}`;
-        const percentage = ((this.currentQuestionIdx) / this.quizData.questions.length) * 100;
+        // Progress labels & Rainbow Progress bar updates
+        const qNum = this.currentQuestionIdx + 1;
+        document.getElementById('questions-count-label').textContent = `${qNum}/${total} Questions`;
+        document.getElementById('question-count-badge').textContent = `Question ${qNum}/${total}`;
+        document.getElementById('floating-question-idx').textContent = `Q${qNum}/${total}`;
+        
+        const percentage = Math.round(((qNum - 1) / total) * 100);
         document.getElementById('progress').style.width = `${percentage}%`;
+        document.getElementById('progress-pct').textContent = `${percentage}%`;
         
+        // Question Text
         const qTitleNode = document.getElementById('question-text');
         qTitleNode.innerHTML = question.question;
         if (question.question_audio) {
@@ -1209,7 +1423,6 @@
           this.renderDragAndDrop(question, optionsWrapper);
         }
         
-        // Auto-play question audio
         this.playCurrentQuestionAudio();
       }
 
@@ -1248,7 +1461,6 @@
             this.userAnswers[this.currentQuestionIdx] = opt;
             this.submitBtn.disabled = false;
             
-            // Speak option on click
             this.playOptionAudio(idx);
           });
           grid.appendChild(card);
@@ -1589,6 +1801,7 @@
         
         if (isCorrect) {
           this.score++;
+          this.updateScorePill();
           this.sound.playCorrect();
           this.renderFeedbackPanel(true, question.explanation);
         } else {
@@ -1637,7 +1850,6 @@
         
         feedbackText.innerHTML = explanation || "No explanation provided.";
         
-        // Auto-play explanation audio
         this.playExplanationAudio();
       }
 
@@ -1658,6 +1870,7 @@
         const totalQs = this.quizData.questions.length;
         const pct = Math.round((this.score / totalQs) * 100);
         
+        // Progress ring score indicator
         const ring = document.getElementById('score-ring');
         const offset = 502 - (502 * pct) / 100;
         ring.style.strokeDashoffset = offset;
@@ -1758,6 +1971,8 @@
 
       restartQuiz() {
         this.confetti.stop();
+        this.score = 0;
+        this.updateScorePill();
         this.showScreen('start');
       }
 
@@ -1770,7 +1985,7 @@
               id: 1,
               type: "multiple-choice",
               question: "Which planet is known as the Red Planet?",
-              options: ["Mercury", "Venus", "Mars", "Jupiter"],
+              options: ["Venus", "Mars", "Jupiter", "Saturn"],
               answer: "Mars",
               explanation: "Mars is covered in iron oxide (rust) dust, giving it a bright red appearance!"
             }
